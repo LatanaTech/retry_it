@@ -1,3 +1,3 @@
-module Retryable
+module RetryIt
   VERSION = "0.1.0"
 end

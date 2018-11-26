@@ -1,6 +1,6 @@
-require "retryable/version"
+require "retry_it/version"
 
-module Retryable
+module RetryIt
   MAX_RUNS = 10
   DEFAULT_TIMEOUT_S = 10 # seconds
   DEFAULT_EXCEPTIONS = []

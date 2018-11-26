@@ -1,17 +1,17 @@
 
 lib = File.expand_path("../lib", __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require "retryable/version"
+require "retry_it/version"
 
 Gem::Specification.new do |spec|
-  spec.name          = "retryable"
-  spec.version       = Retryable::VERSION
+  spec.name          = "retry_it"
+  spec.version       = RetryIt::VERSION
   spec.authors       = ["rgould"]
   spec.email         = ["richard.gould@daliaresearch.com"]
 
   spec.summary       = %q{Easily retry code that fails intermittently}
   spec.description   = %q{Easily retry code that fails intermittently. Perfect for interacting with that flakey HTTP API.}
-  spec.homepage      = "https://github.com/DaliaResearch/retryable"
+  spec.homepage      = "https://github.com/DaliaResearch/retry_it"
   spec.license       = "MIT"
 
   # Specify which files should be added to the gem when it is released.

@@ -1,4 +1,4 @@
-# Retryable
+# RetryIt
 
 Easily retry a code block a set amount of times, before giving up. Useful for unreliable external I/O, such as accessing
 HTTP servers that periodically throw errors, but are expected to work most of the time.
@@ -8,7 +8,7 @@ HTTP servers that periodically throw errors, but are expected to work most of th
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'retryable'
+gem 'retry_it'
 ```
 
 And then execute:
@@ -17,15 +17,15 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install retryable
+    $ gem install retry_it
 
 ## Usage
 
-Include Retryable in your class:
+Include RetryIt in your class:
 
 ```
 class APIClient
-  include Retryable
+  include RetryIt
 end
 ```
 
@@ -33,7 +33,7 @@ You can then call `retry_it` when running code that fails intermittently:
 
 ```
 class APIClient
-  include Retryable
+  include RetryIt
 
   def get_data
     retry_it(errors: [Timeout::Error]) do
@@ -50,11 +50,11 @@ the last error it received.
 `retry_it` accepts these arguments:
 
 * `max_runs`: controls the maximum number of times the block should be fun.
-              Defaults to Retryable::MAX_RUNS
+              Defaults to RetryIt::MAX_RUNS
 * `errors`: an Array of subclasses of Exception, which indicate which Exceptions
             are considered retryable.
 * `timeout`: how many seconds we will wait between retries. Defaults to
-             Retryable::DEFAULT_TIMEOUT_S
+             RetryIt::DEFAULT_TIMEOUT_S
 * `logger`: A Logger object. If provided, when a retry occurs, an info-level
             message will be logged.
 * `should_retry_proc`: A Proc that can be used to more finely control when a
@@ -88,7 +88,7 @@ Keep in mind that you can pass methods as parameters using `method`:
 
 ```
 class APIClient
-  include Retryable
+  include RetryIt
 
   def download_data
     retry_it(should_retry_proc: method(:is_retryable), errors: [HTTPError]) do

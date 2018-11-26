@@ -1,6 +1,6 @@
 require "test_helper"
 
-class RetryableTest < Minitest::Test
+class RetryItTest < Minitest::Test
   class Error < StandardError
     attr_reader :code
     def initialize(code = nil)
@@ -8,10 +8,10 @@ class RetryableTest < Minitest::Test
     end
   end
 
-  include ::Retryable
+  include ::RetryIt
 
   def test_that_it_has_a_version_number
-    refute_nil ::Retryable::VERSION
+    refute_nil ::RetryIt::VERSION
   end
 
   def test_it_retries_until_giving_up
@@ -22,7 +22,7 @@ class RetryableTest < Minitest::Test
         raise "Some kind of network timeout"
       end
     end
-    assert_equal times_run, ::Retryable::MAX_RUNS
+    assert_equal times_run, ::RetryIt::MAX_RUNS
   end
 
   def test_it_stops_retrying_on_success
@@ -49,7 +49,7 @@ class RetryableTest < Minitest::Test
         raise Error.new(504), "Server Error"
       end
     end
-    assert_equal times_run, ::Retryable::MAX_RUNS
+    assert_equal times_run, ::RetryIt::MAX_RUNS
   end
 
   def test_it_supports_logger
