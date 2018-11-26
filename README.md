@@ -84,6 +84,25 @@ retry_it(max_runs: 100, timeout: 60, errors: [Error], logger: logger) do
 end
 ```
 
+Keep in mind that you can pass methods as parameters using `method`:
+
+```
+class APIClient
+  include Retryable
+
+  def download_data
+    retry_it(should_retry_proc: method(:is_retryable), errors: [HTTPError]) do
+      api.get("foo.com")
+    end
+  end
+
+  def is_retryable(error)
+    error.code == 504
+  end
+end
+```
+
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake test` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
