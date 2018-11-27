@@ -65,4 +65,18 @@ class RetryItTest < Minitest::Test
     assert_equal times_run, 2
   end
 
+  def test_it_has_error_callback
+    called = false
+    error = Error.new
+    on_error = Proc.new {|e| assert_equal error, e; called = true}
+    times_run = 0
+    retry_it(timeout: 0, errors: [Error], on_error: on_error) do
+      times_run += 1
+      if times_run == 1
+        raise error
+      end
+    end
+    assert called
+  end
+
 end

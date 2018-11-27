@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    retryable (0.1.0)
+    retry_it (0.1.0)
 
 GEM
   remote: https://rubygems.org/
@@ -16,7 +16,7 @@ DEPENDENCIES
   bundler (~> 1.16)
   minitest (~> 5.0)
   rake (~> 10.0)
-  retryable!
+  retry_it!
 
 BUNDLED WITH
    1.16.5

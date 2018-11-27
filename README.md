@@ -57,6 +57,8 @@ the last error it received.
              RetryIt::DEFAULT_TIMEOUT_S
 * `logger`: A Logger object. If provided, when a retry occurs, an info-level
             message will be logged.
+* `on_error`: A Proc that is called whenever a retryable error occurs. The Proc
+              is passed the raised error object.
 * `should_retry_proc`: A Proc that can be used to more finely control when a
                        retry occurs. The Proc is given one parameter: the
                        Exception object. The Proc must return a boolean value.
@@ -80,6 +82,11 @@ require 'logger'
 
 logger = Logger.new STDOUT
 retry_it(max_runs: 100, timeout: 60, errors: [Error], logger: logger) do
+  some_api_request
+end
+
+# Log a custom warning whenever a retry happens
+retry_it(errors: [Error], on_error: Proc.new {|e| Rollbar.warning(e)}) do
   some_api_request
 end
 ```
