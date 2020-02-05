@@ -13,7 +13,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bundler (~> 1.16)
+  bundler
   minitest (~> 5.0)
   rake (~> 10.0)
   retry_it!
