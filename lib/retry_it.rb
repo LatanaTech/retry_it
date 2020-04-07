@@ -16,16 +16,16 @@ module RetryIt
       yield
     rescue *errors => e
       retries += 1
-      if retries < max_runs && (!should_retry_proc.is_a?(Proc) || should_retry_proc.call(e))
+      should_retry_proc_result = should_retry_proc.respond_to?(:call) ? should_retry_proc.call(e) : true
+
+      if retries < max_runs && should_retry_proc_result
         if logger
           logger.info "Error (#{e.class}), retrying ##{retries} of #{max_runs}. Sleeping for #{timeout}"
         end
-        if on_error && on_error.is_a?(Proc)
-          on_error.call e
-        end
-        if timeout > 0
-          sleep timeout
-        end
+
+        on_error.call(e) if on_error && on_error.respond_to?(:call)
+        sleep timeout if timeout > 0
+
         retry
       else
         raise

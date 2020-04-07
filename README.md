@@ -23,7 +23,7 @@ Or install it yourself as:
 
 Include RetryIt in your class:
 
-```
+```ruby
 class APIClient
   include RetryIt
 end
@@ -31,7 +31,7 @@ end
 
 You can then call `retry_it` when running code that fails intermittently:
 
-```
+```ruby
 class APIClient
   include RetryIt
 
@@ -69,7 +69,7 @@ the last error it received.
 
 Examples:
 
-```
+```ruby
 # Retry only on HTTPErrors with code 504. All other errors will not trigger a
 # retry.
 retry_it(timeout: 60, errors: [HTTPError], should_retry_proc: Proc.new { |e| e.code == 504 }) do
@@ -93,7 +93,7 @@ end
 
 Keep in mind that you can pass methods as parameters using `method`:
 
-```
+```ruby
 class APIClient
   include RetryIt
 
