@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    retry_it (0.1.1)
+    retry_it (0.1.2)
 
 GEM
   remote: https://rubygems.org/
@@ -19,4 +19,4 @@ DEPENDENCIES
   retry_it!
 
 BUNDLED WITH
-   2.0.1
+   2.0.2
