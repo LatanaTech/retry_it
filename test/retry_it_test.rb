@@ -52,6 +52,21 @@ class RetryItTest < Minitest::Test
     assert_equal times_run, ::RetryIt::MAX_RUNS
   end
 
+  def test_is_allows_use_method_for_should_retry_proc
+    def is_retryable(error)
+      error.code == 504
+    end
+
+    times_run = 0
+    assert_raises Error do
+      retry_it(timeout: 0, errors: [Error], should_retry_proc: method(:is_retryable)) do
+        times_run += 1
+        raise Error.new(504), "Server Error"
+      end
+    end
+    assert_equal times_run, ::RetryIt::MAX_RUNS
+  end
+
   def test_it_supports_logger
     logger = Minitest::Mock.new
     logger.expect :info, nil, [String]
@@ -77,6 +92,22 @@ class RetryItTest < Minitest::Test
       end
     end
     assert called
+  end
+
+  def test_it_has_error_callback_define_through_method
+    @called = false
+
+    def error_handler(error)
+      assert_equal Error, error.class
+      @called = true
+    end
+
+    times_run = 0
+    retry_it(max_runs: 2, timeout: 0, errors: [Error], on_error: method(:error_handler)) do
+      times_run += 1
+      raise Error.new if times_run == 1
+    end
+    assert @called
   end
 
 end
